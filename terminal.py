@@ -1,5 +1,6 @@
 import os
 import time
+from getpass import getuser
 
 #Removes spaces and CAPS from string
 def noSpc(string):
@@ -79,9 +80,10 @@ def rmDir(directory):
 
 #shows most popular directories	
 def popDir():
+	username = getuser()
 	pop = raw_input("""Type 'help' if you would like to see the help menu.\n		
-	DIRECTORIES \n	Computer  Programs\n	Users  Mike\n	Documents  Pictures\n	""")
-	noSpc(pop)
+	DIRECTORIES \n	Computer  Programs\n	Users  %s\n	Documents  Pictures\n	""" % username)
+	pop = noSpc(pop)
 	helpMenu(pop)
 	
 	#takes you into popular directory
@@ -91,12 +93,14 @@ def popDir():
 		openDir('C:/Program Files')
 	elif pop == 'openusers':
 		openDir('C:/Users')
-	elif pop == 'openmike':
-		openDir('C:/Users/Mike')
+	elif pop == 'open' + username.lower():
+		openDir('C:/Users/%s' % username)
 	elif pop == 'opendocuments':
-		openDir('C:/Users/Mike/Documents')
+		openDir('C:/Users/%s/Documents' % username)
 	elif pop == 'openpictures':
-		openDir('C:/Users/Mike/Pictures')
+		openDir('C:/Users/%s/Pictures' % username)
+	else:
+		print 'Error, invalid input.'
 		
 #displays the help menu		
 def helpMenu(x):
